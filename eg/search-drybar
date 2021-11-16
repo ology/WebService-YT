@@ -4,7 +4,6 @@ use warnings;
 
 use Data::Dumper::Compact qw(ddc);
 use Storable qw(retrieve);
-use WebService::YTSearch;
 
 use constant BASE => 'https://www.youtube.com/watch?v=';
 
