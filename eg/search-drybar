@@ -16,7 +16,9 @@ my $results = retrieve($results_file);
 my $matches;
 
 for my $video ( keys %$results ) {
-    if ( $results->{$video} =~ /$query/ ) {
+    if ( $results->{$video}{title} =~ /$query/
+        || $results->{$video}{description} =~ /$query/
+    ) {
         $matches->{ BASE . $video } = $results->{$video};
     }
 }
