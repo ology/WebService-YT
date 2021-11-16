@@ -74,9 +74,12 @@ Create a new C<WebService::YTSearch> object.
 
 =head2 search
 
-  $r = $w->search(%arguments);
+  $r = $w->search(query => $arguments);
 
 Fetch the results given the B<query> arguments.
+
+For the accepted arguments, please see the YouTube reference link
+below.
 
 =cut
 
