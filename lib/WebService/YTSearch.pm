@@ -25,7 +25,7 @@ use Try::Tiny;
 
 =head1 DESCRIPTION
 
-C<WebService::YTSearch> searches YouTube.
+C<WebService::YTSearch> searches YouTube.  YMMV...
 
 =head1 ATTRIBUTES
 
