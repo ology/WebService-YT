@@ -8,7 +8,7 @@ use WebService::YTSearch;
 
 use constant BASE => 'https://www.youtube.com/watch?v=';
 
-my $query = shift || 'kid';
+my $query = shift || 'Wife';
 
 my $results_file = 'yt-search-results.dat';
 
