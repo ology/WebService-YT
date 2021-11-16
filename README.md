@@ -1,3 +1,3 @@
-# WebService-YT
+# WebService::YTSearch
 
-Search YouTube
+Perl module to search YouTube with your API key.
