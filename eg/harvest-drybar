@@ -24,7 +24,6 @@ my $pub_date = search_loop( $ws, \%query, $width, \%results );
 
 my $last_pub_date = '';
 
-exit;
 sleep 5;
 
 while ( $pub_date && $pub_date ne $last_pub_date ) {
