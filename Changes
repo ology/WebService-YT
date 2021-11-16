@@ -1,7 +1,10 @@
 Revision history for WebService-YTSearch
 
 {{$NEXT}}
-    - Fixed-up the eg code.
+    - Remove dzil artifact.
+
+0.0101 2021-11-16 14:06:27
+    - Fix-up the eg code.
 
 0.0100 2021-11-16 13:49:35
-    - Copied from WebService-Hooktheory
+    - Copy from WebService-Hooktheory
