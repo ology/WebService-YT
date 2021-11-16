@@ -50,7 +50,7 @@ Default: https://www.googleapis.com/youtube/v3/
 
 has base => (
     is      => 'rw',
-    default => sub { Mojo::URL->new('https://www.googleapis.com/youtube/v3') },
+    default => sub { 'https://www.googleapis.com/youtube/v3' },
 );
 
 =head2 ua
@@ -89,12 +89,11 @@ sub search {
         key  => $self->key,
     };
 
-    my $query;
-    if ( $args{query} ) {
-        $query = join '&', map { "$_=$args{query}->{$_}" } keys %{ $args{query} };
-    }
+    my $url = Mojo::URL->new($self->base . '/search');
 
-    my $url = $self->base . '/search?' . $query;
+    if ( $args{query} ) {
+        $url->query(%{ $args{query} });
+    }
 
     my $tx = $self->ua->get($url);
 
