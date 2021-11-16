@@ -1,6 +1,7 @@
 Revision history for WebService-YTSearch
 
 {{$NEXT}}
+    - Simplify the search method arguments.
     - Improve documentation.
 
 0.0102 2021-11-16 14:23:39
