@@ -1,0 +1,27 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+
+use Data::Dumper::Compact qw(ddc);
+use Storable qw(retrieve);
+use WebService::YTSearch;
+
+use constant BASE => 'https://www.youtube.com/watch?v=';
+
+my $query = shift || 'kid';
+
+my $results_file = 'yt-search-results.dat';
+
+die "No results file\n" unless -e $results_file;
+
+my $results = retrieve($results_file);
+
+my $matches;
+
+for my $video ( keys %$results ) {
+    if ( $results->{$video} =~ /$query/ ) {
+        $matches->{ BASE . $video } = $results->{$video};
+    }
+}
+
+warn __PACKAGE__,' L',__LINE__,' ',ddc($matches, { max_width => 256 });

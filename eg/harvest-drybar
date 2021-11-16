@@ -1,0 +1,70 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+
+use Data::Dumper::Compact qw(ddc);
+use Storable qw(retrieve store);
+use WebService::YTSearch;
+
+my $key = shift || die "Usage: perl $0 12345abcde num\n";
+my $num = shift || 5;
+
+my $q     = 'drybar';
+my $title = 'Dry Bar Comedy';
+my $width = length $num;
+my $results_file = 'yt-search-results.dat';
+
+my %results;
+
+if ( -e $results_file ) {
+    %results = %{ retrieve($results_file) };
+}
+else {
+    my $ws = WebService::YTSearch->new( key => $key );
+
+    my %query;
+    $query{query} = { q => $q, type => 'video', order => 'date', maxResults => $num };
+
+    my $pub_date = search_loop( $ws, \%query, $width, \%results );
+
+    my $last_pub_date = '';
+
+    sleep 5;
+
+    while ( $pub_date && $pub_date ne $last_pub_date ) {
+        $last_pub_date = $pub_date;
+        print "Pub date: $last_pub_date\n";
+
+        $query{query} = { q => $q, type => 'video', order => 'date', maxResults => $num, publishedBefore => $pub_date };
+
+        $pub_date = search_loop( $ws, \%query, $width, \%results );
+
+        sleep 5;
+    }
+
+    store \%results, $results_file;
+}
+
+warn __PACKAGE__,' L',__LINE__,' ',ddc(\%results);
+
+sub search_loop {
+    my ( $ws, $query, $width, $results ) = @_;
+
+    my $pub_date;
+    my $i = 0;
+
+    my $r = $ws->search( %$query );
+
+    for my $item ( @{ $r->{items} } ) {
+        next unless $item->{snippet}{channelTitle} eq $title;
+        my $video_id = $item->{id}{videoId};
+        next unless defined $video_id;
+        next if exists $results->{ $video_id };
+        printf "%0*d. https://www.youtube.com/watch?v=%s - %s\n",
+            $width, ++$i, $video_id, $item->{snippet}{title};
+        $pub_date = $item->{snippet}{publishedAt};
+        $results->{ $video_id } = $item->{snippet}{title};
+    }
+
+    return $pub_date;
+}
