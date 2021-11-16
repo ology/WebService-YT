@@ -17,8 +17,10 @@ my $mock = Mojolicious->new;
 $mock->log->level('fatal'); # only log fatal errors to keep the server quiet
 $mock->routes->get('/search' => sub {
     my $c = shift;
-    my $p = $c->param('q');
-    return $c->render(status => 200, json => { ok => 1 }) if $p eq 'foo';
+    return $c->render(status => 200, json => { ok => 1 })
+        if $c->param('q') eq 'foo'
+            && $c->param('part') eq 'snippet'
+            && $c->param('key') eq '1234567890';
     return $c->render(status => 400, text => 'Missing values');
 });
 $ws->ua->server->app($mock); # point our UserAgent to our new mock server
