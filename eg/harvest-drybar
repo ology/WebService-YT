@@ -2,8 +2,7 @@
 use strict;
 use warnings;
 
-use Data::Dumper::Compact qw(ddc);
-use Storable qw(retrieve store);
+use Storable qw(store);
 use WebService::YTSearch;
 
 my $key = shift || die "Usage: perl $0 12345abcde num\n";
@@ -16,36 +15,29 @@ my $results_file = 'yt-search-results.dat';
 
 my %results;
 
-if ( -e $results_file ) {
-    %results = %{ retrieve($results_file) };
-}
-else {
-    my $ws = WebService::YTSearch->new( key => $key );
+my $ws = WebService::YTSearch->new( key => $key );
 
-    my %query;
-    $query{query} = { q => $q, type => 'video', order => 'date', maxResults => $num };
+my %query;
+$query{query} = { q => $q, type => 'video', order => 'date', maxResults => $num };
 
-    my $pub_date = search_loop( $ws, \%query, $width, \%results );
+my $pub_date = search_loop( $ws, \%query, $width, \%results );
 
-    my $last_pub_date = '';
+my $last_pub_date = '';
+
+sleep 5;
+
+while ( $pub_date && $pub_date ne $last_pub_date ) {
+    $last_pub_date = $pub_date;
+    print "Pub date: $last_pub_date\n";
+
+    $query{query} = { q => $q, type => 'video', order => 'date', maxResults => $num, publishedBefore => $pub_date };
+
+    $pub_date = search_loop( $ws, \%query, $width, \%results );
 
     sleep 5;
-
-    while ( $pub_date && $pub_date ne $last_pub_date ) {
-        $last_pub_date = $pub_date;
-        print "Pub date: $last_pub_date\n";
-
-        $query{query} = { q => $q, type => 'video', order => 'date', maxResults => $num, publishedBefore => $pub_date };
-
-        $pub_date = search_loop( $ws, \%query, $width, \%results );
-
-        sleep 5;
-    }
-
-    store \%results, $results_file;
 }
 
-warn __PACKAGE__,' L',__LINE__,' ',ddc(\%results);
+store \%results, $results_file;
 
 sub search_loop {
     my ( $ws, $query, $width, $results ) = @_;
