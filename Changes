@@ -1,6 +1,9 @@
 Revision history for WebService-YTSearch
 
 {{$NEXT}}
+    - Improve documentation.
+
+0.0102 2021-11-16 14:23:39
     - Remove dzil artifact.
 
 0.0101 2021-11-16 14:06:27
