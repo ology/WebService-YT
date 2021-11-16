@@ -25,7 +25,7 @@ use Try::Tiny;
 
 =head1 DESCRIPTION
 
-C<WebService::YTSearch> searches YouTube.  YMMV...
+C<WebService::YTSearch> searches YouTube with your API key. YMMV.
 
 =head1 ATTRIBUTES
 
