@@ -74,29 +74,24 @@ Create a new C<WebService::YTSearch> object.
 
 =head2 search
 
-  $r = $w->search(query => $arguments);
+  $r = $w->search(%arguments);
 
-Fetch the results given the B<query> arguments.
+Fetch the results given the B<arguments>.
 
 For the accepted arguments, please see the YouTube reference link
-below.
+below (the main one being C<q>).
 
 =cut
 
 sub search {
     my ( $self, %args ) = @_;
 
-    $args{query} = {
-        %{ $args{query} },
-        part => 'snippet',
-        key  => $self->key,
-    };
-
-    my $url = Mojo::URL->new($self->base . '/search');
-
-    if ( $args{query} ) {
-        $url->query(%{ $args{query} });
-    }
+    my $url = Mojo::URL->new($self->base . '/search')
+        ->query(
+            %args,
+            part => 'snippet',
+            key  => $self->key,
+        );
 
     my $tx = $self->ua->get($url);
 
