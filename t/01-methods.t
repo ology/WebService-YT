@@ -1,14 +1,14 @@
 #!perl
 use Test::More;
+use Test::Exception;
 
 use Mojo::Base -strict;
 use Mojolicious;
-use Try::Tiny qw(try catch);
 
 use_ok 'WebService::YTSearch';
 
-my $ws = try { WebService::YTSearch->new } catch { $_ };
-like $ws, qr/Missing required arguments: key/, 'key required';
+my $ws = throws_ok { WebService::YTSearch->new }
+    qr/Missing required arguments: key/, 'key required';
 
 $ws = WebService::YTSearch->new( key => '1234567890' );
 isa_ok $ws, 'WebService::YTSearch';
@@ -27,9 +27,7 @@ $ws->ua->server->app($mock); # point our UserAgent to our new mock server
 
 $ws->base(Mojo::URL->new(''));
 
-my $data = try {
-    $ws->search(query => { q => 'foo' })
-} catch { $_ };
+my $data = $ws->search(query => { q => 'foo' });
 is_deeply $data, { ok => 1 }, 'search';
 
 done_testing();
