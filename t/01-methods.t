@@ -27,7 +27,7 @@ $ws->ua->server->app($mock); # point our UserAgent to our new mock server
 
 $ws->base(Mojo::URL->new(''));
 
-my $data = $ws->search(query => { q => 'foo' });
+my $data = $ws->search(q => 'foo');
 is_deeply $data, { ok => 1 }, 'search';
 
 done_testing();
