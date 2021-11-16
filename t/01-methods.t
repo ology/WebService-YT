@@ -7,10 +7,10 @@ use Mojolicious;
 
 use_ok 'WebService::YTSearch';
 
-my $ws = throws_ok { WebService::YTSearch->new }
+throws_ok { WebService::YTSearch->new }
     qr/Missing required arguments: key/, 'key required';
 
-$ws = WebService::YTSearch->new( key => '1234567890' );
+my $ws = WebService::YTSearch->new( key => '1234567890' );
 isa_ok $ws, 'WebService::YTSearch';
 
 my $mock = Mojolicious->new;
