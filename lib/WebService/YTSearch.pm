@@ -120,7 +120,7 @@ sub _handle_response {
         };
     }
     else {
-        croak "Connection error: ", $res->message;
+        croak "Connection error: ", $res->message, "\n";
     }
 
     return $data;
