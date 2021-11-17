@@ -37,7 +37,7 @@ while ( $pub_date && $pub_date ne $last_pub_date ) {
 store \%results, $results_file;
 
 sub search_loop {
-    my ( $ws, $query, $width, $results ) = @_;
+    my ( $ws, $query, $results ) = @_;
 
     my $pub_date;
 
