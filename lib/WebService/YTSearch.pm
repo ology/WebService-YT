@@ -87,7 +87,7 @@ sub search {
     my ( $self, %args ) = @_;
 
     my $url = Mojo::URL->new( $self->base )
-        ->path('/search')
+        ->path('search')
         ->query(
             %args,
             part => 'snippet',
