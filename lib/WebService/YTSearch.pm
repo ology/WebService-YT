@@ -10,9 +10,7 @@ use namespace::clean;
 
 use Carp;
 use Mojo::UserAgent;
-use Mojo::JSON qw( decode_json );
 use Mojo::URL;
-use Try::Tiny;
 
 =head1 SYNOPSIS
 
@@ -109,13 +107,7 @@ sub _handle_response {
     my $res = $tx->result;
 
     if ( $res->is_success ) {
-        my $body = $res->body;
-        try {
-            $data = decode_json($body);
-        }
-        catch {
-            croak $body, "\n";
-        };
+        $data = $res->body;
     }
     else {
         croak "Connection error: ", $res->message, "\n";
@@ -137,12 +129,8 @@ L<https://developers.google.com/youtube/v3/docs/search/list>
 
 L<Moo>
 
-L<Mojo::JSON>
-
 L<Mojo::UserAgent>
 
 L<Mojo::URL>
-
-L<Try::Tiny>
 
 =cut
