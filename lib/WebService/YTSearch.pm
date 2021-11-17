@@ -10,7 +10,9 @@ use namespace::clean;
 
 use Carp;
 use Mojo::UserAgent;
+use Mojo::JSON qw( decode_json );
 use Mojo::URL;
+use Try::Tiny;
 
 =head1 SYNOPSIS
 
@@ -48,7 +50,7 @@ Default: https://www.googleapis.com/youtube/v3/
 
 has base => (
     is      => 'rw',
-    default => sub { 'https://www.googleapis.com/youtube/v3' },
+    default => sub { 'https://www.googleapis.com' },
 );
 
 =head2 ua
@@ -84,13 +86,15 @@ below (the main one being C<q>).
 sub search {
     my ( $self, %args ) = @_;
 
+warn __PACKAGE__,' L',__LINE__,' BASE: ',$self->base,"\n";
     my $url = Mojo::URL->new( $self->base )
-        ->path('search')
+        ->path('youtube/v3/search')
         ->query(
             %args,
             part => 'snippet',
             key  => $self->key,
         );
+warn __PACKAGE__,' L',__LINE__,' URL: ',$url,"\n";
 
     my $tx = $self->ua->get($url);
 
@@ -107,7 +111,13 @@ sub _handle_response {
     my $res = $tx->result;
 
     if ( $res->is_success ) {
-        $data = $res->body;
+        my $body = $res->body;
+        try {
+            $data = decode_json($body);
+        }
+        catch {
+            croak $body, "\n";
+        };
     }
     else {
         croak "Connection error: ", $res->message, "\n";
@@ -129,8 +139,12 @@ L<https://developers.google.com/youtube/v3/docs/search/list>
 
 L<Moo>
 
+L<Mojo::JSON>
+
 L<Mojo::UserAgent>
 
 L<Mojo::URL>
+
+L<Try::Tiny>
 
 =cut
