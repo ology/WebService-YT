@@ -86,7 +86,6 @@ below (the main one being C<q>).
 sub search {
     my ( $self, %args ) = @_;
 
-warn __PACKAGE__,' L',__LINE__,' BASE: ',$self->base,"\n";
     my $url = Mojo::URL->new( $self->base )
         ->path('youtube/v3/search')
         ->query(
@@ -94,7 +93,6 @@ warn __PACKAGE__,' L',__LINE__,' BASE: ',$self->base,"\n";
             part => 'snippet',
             key  => $self->key,
         );
-warn __PACKAGE__,' L',__LINE__,' URL: ',$url,"\n";
 
     my $tx = $self->ua->get($url);
 
