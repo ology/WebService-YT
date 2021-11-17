@@ -20,17 +20,12 @@ $mock->routes->get('/search' => sub {
     is $c->param('q'), 'foo', 'q param';
     is $c->param('part'), 'snippet', 'part param';
     is $c->param('key'), '1234567890', 'key param';
-    return $c->render(status => 200, json => { ok => 1 })
-        if $c->param('q') eq 'foo'
-            && $c->param('part') eq 'snippet'
-            && $c->param('key') eq '1234567890';
-    return $c->render(status => 400, text => 'Missing values');
+    return $c->render(status => 200, json => { ok => 1 });
 });
 $ws->ua->server->app($mock); # point our UserAgent to our new mock server
 
 $ws->base(Mojo::URL->new(''));
 
-my $data = $ws->search(q => 'foo');
-is_deeply $data, { ok => 1 }, 'search';
+lives_ok { $ws->search(q => 'foo') } 'search';
 
 done_testing();
