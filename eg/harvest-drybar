@@ -10,10 +10,7 @@ my $num = shift || 50;
 
 my $q     = 'drybar';
 my $title = 'Dry Bar Comedy';
-my $width = length $num;
 my $results_file = 'yt-search-results.dat';
-
-my $i = 0;
 
 my %results;
 
@@ -21,7 +18,7 @@ my $ws = WebService::YTSearch->new( key => $key );
 
 my $query = { q => $q, type => 'video', order => 'date', maxResults => $num };
 
-my $pub_date = search_loop( $ws, $query, $width, \%results, \$i );
+my $pub_date = search_loop( $ws, $query, \%results );
 
 my $last_pub_date = '';
 
@@ -33,7 +30,7 @@ while ( $pub_date && $pub_date ne $last_pub_date ) {
 
     $query = { q => $q, type => 'video', order => 'date', maxResults => $num, publishedBefore => $pub_date };
 
-    $pub_date = search_loop( $ws, $query, $width, \%results, \$i );
+    $pub_date = search_loop( $ws, $query, \%results );
 
     sleep 5;
 }
@@ -41,7 +38,7 @@ while ( $pub_date && $pub_date ne $last_pub_date ) {
 store \%results, $results_file;
 
 sub search_loop {
-    my ( $ws, $query, $width, $results, $i ) = @_;
+    my ( $ws, $query, $results ) = @_;
 
     my $pub_date;
 
@@ -54,8 +51,8 @@ sub search_loop {
         next unless defined $video_id;
         next if exists $results->{ $video_id };
 
-        printf "%0*d. https://www.youtube.com/watch?v=%s - %s\n",
-            $width, ++$$i, $video_id, $item->{snippet}{title};
+        printf "https://www.youtube.com/watch?v=%s - %s\n",
+            $video_id, $item->{snippet}{title};
 
         $pub_date = $item->{snippet}{publishedAt};
 
