@@ -49,12 +49,16 @@ sub search_loop {
 
     for my $item ( @{ $r->{items} } ) {
         next unless $item->{snippet}{channelTitle} eq $title;
+
         my $video_id = $item->{id}{videoId};
         next unless defined $video_id;
         next if exists $results->{ $video_id };
+
         printf "%0*d. https://www.youtube.com/watch?v=%s - %s\n",
             $width, ++$i, $video_id, $item->{snippet}{title};
+
         $pub_date = $item->{snippet}{publishedAt};
+
         $results->{ $video_id } = {
             title       => $item->{snippet}{title},
             description => $item->{snippet}{description},
