@@ -17,8 +17,7 @@ my %results;
 
 my $ws = WebService::YTSearch->new( key => $key );
 
-my %query;
-$query{query} = { q => $q, type => 'video', order => 'date', maxResults => $num };
+my %query = ( q => $q, type => 'video', order => 'date', maxResults => $num );
 
 my $pub_date = search_loop( $ws, \%query, $width, \%results );
 
@@ -30,7 +29,7 @@ while ( $pub_date && $pub_date ne $last_pub_date ) {
     $last_pub_date = $pub_date;
     print "Pub date: $last_pub_date\n";
 
-    $query{query} = { q => $q, type => 'video', order => 'date', maxResults => $num, publishedBefore => $pub_date };
+    %query = ( q => $q, type => 'video', order => 'date', maxResults => $num, publishedBefore => $pub_date );
 
     $pub_date = search_loop( $ws, \%query, $width, \%results );
 
