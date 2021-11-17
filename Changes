@@ -1,6 +1,7 @@
 Revision history for WebService-YTSearch
 
 {{$NEXT}}
+    - Improve the eg/ code.
 
 0.0202 2021-11-16 20:16:39
     - Fix the eg/ code more...
