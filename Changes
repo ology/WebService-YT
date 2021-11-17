@@ -1,6 +1,7 @@
 Revision history for WebService-YTSearch
 
 {{$NEXT}}
+    - Fix the eg/harvest-drybar query syntax.
 
 0.0200 2021-11-16 14:42:21
     - Simplify the search method arguments.
