@@ -2,7 +2,7 @@ package WebService::YTSearch;
 
 # ABSTRACT: Search YouTube
 
-our $VERSION = '0.0204';
+our $VERSION = '0.0300';
 
 use Moo;
 use strictures 2;
