@@ -27,7 +27,7 @@ while ( $pub_date && $pub_date ne $last_pub_date ) {
     $last_pub_date = $pub_date;
     print "Pub date: $last_pub_date\n";
 
-    $query = { q => $q, type => 'video', order => 'date', maxResults => $num, publishedBefore => $pub_date };
+    $query->{publishedBefore} = $pub_date;
 
     $pub_date = search_loop( $ws, $query, \%results );
 
