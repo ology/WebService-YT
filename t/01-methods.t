@@ -10,8 +10,7 @@ use_ok 'WebService::YTSearch';
 throws_ok { WebService::YTSearch->new }
     qr/Missing required arguments: key/, 'key required';
 
-my $ws = WebService::YTSearch->new( key => '1234567890' );
-isa_ok $ws, 'WebService::YTSearch';
+my $ws = new_ok 'WebService::YTSearch' => [ key => '1234567890' ];
 
 my $mock = Mojolicious->new;
 $mock->log->level('fatal'); # only log fatal errors to keep the server quiet
