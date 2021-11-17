@@ -86,7 +86,8 @@ below (the main one being C<q>).
 sub search {
     my ( $self, %args ) = @_;
 
-    my $url = Mojo::URL->new($self->base . '/search')
+    my $url = Mojo::URL->new( $self->base )
+        ->path('/search')
         ->query(
             %args,
             part => 'snippet',
