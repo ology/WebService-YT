@@ -17,6 +17,9 @@ my $mock = Mojolicious->new;
 $mock->log->level('fatal'); # only log fatal errors to keep the server quiet
 $mock->routes->get('/search' => sub {
     my $c = shift;
+    is $c->param('q'), 'foo', 'q param';
+    is $c->param('part'), 'snippet', 'part param';
+    is $c->param('key'), '1234567890', 'key param';
     return $c->render(status => 200, json => { ok => 1 })
         if $c->param('q') eq 'foo'
             && $c->param('part') eq 'snippet'
