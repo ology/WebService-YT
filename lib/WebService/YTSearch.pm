@@ -44,7 +44,7 @@ has key => (
 
 The base URL.
 
-Default: https://www.googleapis.com/youtube/v3/
+Default: https://www.googleapis.com
 
 =cut
 
