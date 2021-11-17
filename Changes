@@ -1,6 +1,9 @@
 Revision history for WebService-YTSearch
 
 {{$NEXT}}
+    - Fix a "syntax typo."
+
+0.0204 2021-11-17 09:29:42
     - Improve the eg/harvest program.
     - Use more Mojo::URL! :D
 
