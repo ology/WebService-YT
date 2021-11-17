@@ -2,6 +2,7 @@ Revision history for WebService-YTSearch
 
 {{$NEXT}}
     - Improve the eg/harvest program.
+    - Use more Mojo::URL! :D
 
 0.0203 2021-11-16 21:20:02
     - Improve the eg/ code again.
