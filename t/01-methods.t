@@ -23,7 +23,7 @@ $mock->routes->get('/search' => sub {
 });
 $ws->ua->server->app($mock); # point our UserAgent to our new mock server
 
-$ws->base(Mojo::URL->new(''));
+$ws->base('');
 
 lives_ok { $ws->search(q => 'foo') } 'search';
 
