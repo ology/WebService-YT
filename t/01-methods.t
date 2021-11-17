@@ -14,7 +14,7 @@ my $ws = new_ok 'WebService::YTSearch' => [ key => '1234567890' ];
 
 my $mock = Mojolicious->new;
 $mock->log->level('fatal'); # only log fatal errors to keep the server quiet
-$mock->routes->get('/search' => sub {
+$mock->routes->get('/youtube/v3/search' => sub {
     my $c = shift;
     is $c->param('q'), 'foo', 'q param';
     is $c->param('part'), 'snippet', 'part param';
