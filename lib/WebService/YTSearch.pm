@@ -20,7 +20,7 @@ use Try::Tiny;
 
   my $w = WebService::YTSearch->new( key => '1234567890abcdefghij' );
 
-  my $r = $w->search( query => { q => 'foo', maxResults => 10 } );
+  my $r = $w->search( q => 'foo', maxResults => 10 );
   print Dumper $r;
 
 =head1 DESCRIPTION
