@@ -5,9 +5,10 @@ use warnings;
 use Storable qw(store);
 use WebService::YTSearch;
 
-my $key = shift || die "Usage: perl $0 12345abcde query num\n";
-my $q   = shift || 'Gene Boggs';
-my $num = shift || 50;
+my $key   = shift || die "Usage: perl $0 12345abcde query num\n";
+my $q     = shift || 'Gene Boggs';
+my $num   = shift || 50;
+my $total = shift || 100;
 
 my $results_file = $0 . '.dat';
 
@@ -17,19 +18,21 @@ my $ws = WebService::YTSearch->new( key => $key );
 
 my $query = { q => $q, type => 'video', order => 'date', maxResults => $num };
 
-my $pub_date = search_loop( $ws, $query, \%results );
+my $pub_date = search_loop( $ws, $query, \%results, $total );
 
 my $last_pub_date = '';
 
 sleep 5;
 
 while ( $pub_date && $pub_date ne $last_pub_date ) {
+    last if keys %results >= $total;
+
     $last_pub_date = $pub_date;
     print "Pub date: $last_pub_date\n";
 
     $query->{publishedBefore} = $pub_date;
 
-    $pub_date = search_loop( $ws, $query, \%results );
+    $pub_date = search_loop( $ws, $query, \%results, $total );
 
     sleep 5;
 }
@@ -37,13 +40,15 @@ while ( $pub_date && $pub_date ne $last_pub_date ) {
 store \%results, $results_file;
 
 sub search_loop {
-    my ( $ws, $query, $results ) = @_;
+    my ( $ws, $query, $results, $total ) = @_;
 
     my $pub_date;
 
     my $r = $ws->search( %$query );
 
     for my $item ( @{ $r->{items} } ) {
+        last if keys %$results >= $total;
+
         my $video_id = $item->{id}{videoId};
         next unless defined $video_id;
         next if exists $results->{ $video_id };
