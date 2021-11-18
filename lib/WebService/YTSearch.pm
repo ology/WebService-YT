@@ -68,9 +68,9 @@ has ua => (
 
 =head2 new
 
-  $w = WebService::YTSearch->new(%arguments);
+  $w = WebService::YTSearch->new(key => $key);
 
-Create a new C<WebService::YTSearch> object.
+Create a new C<WebService::YTSearch> object given an API B<key>.
 
 =head2 search
 
