@@ -12,7 +12,7 @@ throws_ok { WebService::YTSearch->new }
 my $ws = new_ok 'WebService::YTSearch' => [ key => '1234567890' ];
 
 my $mock = Mojolicious->new;
-$mock->log->level('fatal'); # only log fatal errors to keep the server quiet
+$mock->log->level('fatal'); # Only log fatal errors to keep the server quiet
 $mock->routes->get('/youtube/v3/search' => sub {
     my $c = shift;
     is $c->param('q'), 'foo', 'q param';
@@ -20,8 +20,7 @@ $mock->routes->get('/youtube/v3/search' => sub {
     is $c->param('key'), '1234567890', 'key param';
     return $c->render(status => 200, json => { ok => 1 });
 });
-$ws->ua->server->app($mock); # point our UserAgent to our new mock server
-
+$ws->ua->server->app($mock); # Point the UserAgent to the mock server
 $ws->base('');
 
 lives_ok { $ws->search(q => 'foo') } 'search';
