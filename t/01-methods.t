@@ -2,7 +2,6 @@
 use Test::More;
 use Test::Exception;
 
-use Mojo::Base -strict;
 use Mojolicious;
 
 use_ok 'WebService::YTSearch';
