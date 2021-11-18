@@ -7,8 +7,8 @@ use WebService::YTSearch;
 
 my $key = shift || die "Usage: perl $0 12345abcde query num max\n";
 my $q   = shift || 'Gene Boggs';
-my $num = shift || 50;
-my $max = shift || 100;
+my $num = shift || 50;  # Attempt to grab 50 videos at a time
+my $max = shift || 100; # Maximum number of videos to harvest
 
 my $results_file = $0 . '.dat';
 
