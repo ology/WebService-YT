@@ -1,6 +1,7 @@
 Revision history for WebService-YTSearch
 
 {{$NEXT}}
+    - Improve documentation.
 
 0.0302 2021-11-18 07:52:41
     - Improve the eg/harvest program sightly.
