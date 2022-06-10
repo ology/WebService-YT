@@ -137,13 +137,13 @@ The tests in F<t/01-methods.t>
 
 L<https://developers.google.com/youtube/v3/docs/search/list>
 
-L<Moo>
-
 L<Mojo::JSON>
+
+L<Mojo::URL>
 
 L<Mojo::UserAgent>
 
-L<Mojo::URL>
+L<Moo>
 
 L<Try::Tiny>
 
