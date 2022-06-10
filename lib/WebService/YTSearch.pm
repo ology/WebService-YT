@@ -44,7 +44,7 @@ has key => (
 
 The base URL.
 
-Default: https://www.googleapis.com
+Default: C<https://www.googleapis.com>
 
 =cut
 
@@ -56,6 +56,8 @@ has base => (
 =head2 ua
 
 The user agent.
+
+Default: C<Mojo::UserAgent-E<gt>new>
 
 =cut
 
@@ -70,7 +72,7 @@ has ua => (
 
   $w = WebService::YTSearch->new(key => $key);
 
-Create a new C<WebService::YTSearch> object given an API B<key>.
+Create a new C<WebService::YTSearch> object given your API B<key>.
 
 =head2 search
 
