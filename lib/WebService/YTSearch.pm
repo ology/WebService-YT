@@ -2,7 +2,7 @@ package WebService::YTSearch;
 
 # ABSTRACT: Search YouTube
 
-our $VERSION = '0.0303';
+our $VERSION = '0.0304';
 
 use strictures 2;
 use Carp qw(croak);
